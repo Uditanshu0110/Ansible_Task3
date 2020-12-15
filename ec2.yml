@@ -1,0 +1,37 @@
+- hosts: "localhost"
+  vars_files:
+          - sec.yml
+  tasks:
+          - name: "LoadBalancer"
+            ec2:
+                    key_name: "Uditanshu1"
+                    instance_type: "t2.micro"
+                    image: "ami-0ebc1ac48dfd14136"
+                    wait: yes
+                    count: 1
+                    instance_tags:
+                            Name: LoadBalancer
+                    vpc_subnet_id: "subnet-e7f7cd8f"
+                    assign_public_ip: yes
+                    region: "ap-south-1"
+                    state: present
+                    group_id: "sg-031eede2e98045b4a"
+                    aws_access_key: "{{ access_Key }}"
+                    aws_secret_key: "{{ secret_Key }}"
+          - name: "WebServer"
+            ec2:
+                    key_name: "Uditanshu1"
+                    instance_type: "t2.micro"
+                    image: "ami-0ebc1ac48dfd14136"
+                    wait: yes
+                    count: 3
+                    instance_tags:
+                            Name: WebServer
+                    vpc_subnet_id: "subnet-e7f7cd8f"
+                    assign_public_ip: yes
+                    region: "ap-south-1"
+                    state: present
+                    group_id: "sg-031eede2e98045b4a"
+                    aws_access_key: "{{access_Key}}"
+                    aws_secret_key: "{{secret_Key}}"
+
